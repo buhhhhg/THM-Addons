@@ -29,12 +29,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Release
-        uses: softprops/action-gh-release@v3
+      - name: Upload build
+        if: always()
+        uses: actions/upload-artifact@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: snapshot
-          name: Dev Build
-          prerelease: true
-          files: |
-            ./build/libs/*.jar
+          name: snapshot
+          path: |
+            build/libs
+          retention-days: 14
